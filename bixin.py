@@ -42,8 +42,9 @@ def bixin():
             else:
                 print("\t\033[0;33m%s\033[0m" % '[x]未获取到数据')
         if (i % 5 == 0):
-            print('爬了5套，暂停10s，防止403')
-            time.sleep(10)
+            # print('爬了5套，暂停10s，防止403')
+            # time.sleep(10)
+            pass
 
 
 def geturl(i):
@@ -95,15 +96,22 @@ def download(id, all):
         os.makedirs(folder)
     for item in all:
         itemfolder = folder + '\\' + item
-        if not os.path.exists(itemfolder):
-            os.makedirs(itemfolder)
+        if True:  # not os.path.exists(itemfolder):
+            if not os.path.exists(itemfolder):
+                os.makedirs(itemfolder)
             for img in all[item]:
+                path = itemfolder + img[img.rfind('/'):]
+                if os.path.exists(path):
+                    continue
                 i = i + 1
                 if (i % 10 == 0):
-                    time.sleep(20)
-                path = itemfolder + img[img.rfind('/'):]
+                    pass
+                    # time.sleep(20)
                 imgpath = path.replace('/', '\\')
-                urlretrieve(img, imgpath)
+                try:
+                    urlretrieve(img, imgpath)
+                except:
+                    continue
         else:
             print('\t\t' + itemfolder + '已存在，跳过')
     print('\t\t下载结束')
